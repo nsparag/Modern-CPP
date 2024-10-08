@@ -21,3 +21,44 @@ Advantages:
 * Conciseness: With auto, you can skip explicit type declarations, making your code more concise.
 * Readability: Your code becomes more readable, as the focus is on the variable's name and its purpose, rather than its type.
 * Reduced typing errors: The compiler will detect type errors at compile-time, reducing the likelihood of runtime errors.
+
+## Range-Based Loops
+
+A Range-Based Loop is a type of loop that allows you to iterate over a range of values, such as the elements of a container or an array, without having to manually manage the loop counter or index.
+Syntax:
+
+        for (range_declaration : range_expression) {
+            // statement(s)
+        }
+
+Example:
+
+        // Print the values in `numbers` vector
+        std::vector<int> numbers = {1, 2, 3, 4, 5};
+        for (auto& num : numbers) {
+            std::cout << num << " ";
+        }
+
+It is same as traditional for loop as implemented below.
+
+        std::vector<int> numbers = {1, 2, 3, 4, 5};
+        for(int i=0; i<=4; i++){
+            std::cout << numbers[i] << " ";
+        }
+
+Advantages:
+* Concise code: Range-Based Loops make your code more concise and easier to read.
+* Less error-prone: You don't have to manually manage the loop counter or index, which reduces the risk of off-by-one errors or other mistakes.
+* Type-safe: The type of the loop variable is automatically deduced by the compiler, which ensures type safety.
+
+## Initializer Lists
+An initializer list is a list of values enclosed in curly braces `{}`. It allows to initialize objects in a uniform way.
+
+Example:
+
+    int var1{24}; // initialize var1 with value 24
+    int var1 = {24}; // initialize var1 with value 24
+    char var2{'p'}; // initialize var2 with value 'p'
+    char var2 = {'p'}; // initialize var2 with value 'p'
+    std::vector<int> v{ 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
+    std::vector<int> v = { 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
