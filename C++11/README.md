@@ -3,19 +3,21 @@
 C++11 is an ISO standard published in the year 2011. 
 
 To compile a code written in C++11, one need to use `-std=c++11` flag to the command line compilation string. If we want to compile a file `mainFile.cpp` then the command line string to compile this file will be 
-
-    g++ -std=c++11 mainFile.cpp
-
+````C++
+g++ -std=c++11 mainFile.cpp
+````
 ## Automatic Type Deduction
 
 With auto, you can let the compiler figure out the type of the variable, making your code more concise and easier to read.
 
 **Example**:
 
-    auto intVariable = 34;	// integer
-    auto charVariable = 'k'; // character
-    auto doubleVariable = 34.566; // double
-    auto constCharVariable = "Hello"; // const char*
+````C++
+auto intVariable = 34;	// integer
+auto charVariable = 'k'; // character
+auto doubleVariable = 34.566; // double
+auto constCharVariable = "Hello"; // const char*
+````
 
 **Advantages**:
 * Conciseness: With auto, you can skip explicit type declarations, making your code more concise.
@@ -26,11 +28,11 @@ With auto, you can let the compiler figure out the type of the variable, making 
 `decltype` is a keyword that allows to deduce the type of an expression.
 
 **Example**:
-
-    int var1 = 5;
-    decltype(var1) var2; // var2 is of type int
-    decltype(var1+5) var2; // var2 is of type int
-    
+````C++
+int var1 = 5;
+decltype(var1) var2; // var2 is of type int
+decltype(var1+5) var2; // var2 is of type int
+````
 **Use Cases**
 * Template Metaprogramming: decltype is commonly used in template metaprogramming to deduce the type of expressions.
 * SFINAE: decltype can be used with SFINAE to enable or disable function templates based on the type of expressions.
@@ -45,52 +47,53 @@ The final keyword is used to specify that a virtual function cannot be overridde
 It is typically used to prevent unwanted overrides and ensure that a function behaves consistently across all derived classes.
 
 **Example:**
+````C++
+class Base {
+public:
+    virtual void foo() final {
+        // Implementation
+    }
+};
 
-    class Base {
-    public:
-        virtual void foo() final {
-            // Implementation
-        }
-    };
-    
-    class Derived : public Base {
-    public:
-        void foo() override { // Error: cannot override final function
-        }
-    };
-
+class Derived : public Base {
+public:
+    void foo() override { // Error: cannot override final function
+    }
+};
+````
 ## Override
 The override keyword is used to specify that a virtual function is intended to override a function in a base class. It is typically used to ensure that a function is correctly overriding a base class function, rather than introducing a new function with the same name.
+````C++
+class Base {
+public:
+    virtual void foo() {
+        // Implementation
+    }
+};
 
-    class Base {
-    public:
-        virtual void foo() {
-            // Implementation
-        }
-    };
-    
-    class Derived : public Base {
-    public:
-        void foo() override { // Correct override of Base::foo()
-            // Implementation
-        }
-    };
-
+class Derived : public Base {
+public:
+    void foo() override { // Correct override of Base::foo()
+        // Implementation
+    }
+};
+````
 ## Trailing Return Types
 It deals about specifying the return type of a function after the function name. his syntax is especially useful when the return type depends on the template parameters of the function.
 
 **Example 1:**: the function will return int type value
-
-    auto calculateArea(int length, int width) -> int {
-        return length * width;
-    }
-
+````C++
+auto calculateArea(int length, int width) -> int {
+    return length * width;
+}
+````
 **Example 2:** the function will return value of type (x+y)
-
-    template <typename T, typename U>
-    auto add(T x, U y) -> decltype(x + y) {
-        return x + y;
-    }
+````C++
+template <typename T, typename U>
+auto add(T x, U y) -> decltype(x + y) {
+    return x + y;
+}
+````
 By using trailing return types, you can write more expressive and maintainable code in C++.
 
 ## Move semantics
@@ -113,44 +116,46 @@ Benefits of Move Semantics:
 Rvalue references are a type of reference that allows us to bind to an rvalue. 
 An rvalue is an expression that can appear on the right-hand side of an assignment. 
 Examples of rvalue
-
-    int var = 2;    // 2 is rvalue
-    int variable = foo(); // function call is rvalue
-        
+````C++
+int var = 2;    // 2 is rvalue
+int variable = foo(); // function call is rvalue
+````       
 An rvalue reference is a type of reference that can bind to an rvalue. It is declared using the `&&` syntax. Rvalue references work by allowing us to bind to an rvalue and extend its lifetime. When an rvalue reference is created, it binds to the rvalue and prevents it from being destroyed until the reference goes out of scope.
 
 Example: 
-
-    int main() {
-        int&& r = 5; // r binds to the rvalue 5
-        std::cout << r << std::endl; // prints 5
-        return 0;
-    }
-
+````C++
+int main() {
+    int&& r = 5; // r binds to the rvalue 5
+    std::cout << r << std::endl; // prints 5
+    return 0;
+}
+````
 
 ## Range-Based Loops
 
 A Range-Based Loop is a type of loop that allows you to iterate over a range of values, such as the elements of a container or an array, without having to manually manage the loop counter or index.
 Syntax:
 
-    for (range_declaration : range_expression) {
-        // statement(s)
-    }
-
+````C++
+for (range_declaration : range_expression) {
+    // statement(s)
+}
+````
 Example:
-
-    // Print the values in `numbers` vector
-    std::vector<int> numbers = {1, 2, 3, 4, 5};
-    for (auto& num : numbers) {
-        std::cout << num << " ";
-    }
-
+````C++
+// Print the values in `numbers` vector
+std::vector<int> numbers = {1, 2, 3, 4, 5};
+for (auto& num : numbers) {
+    std::cout << num << " ";
+}
+````
 It is same as traditional for loop as implemented below.
-
-    std::vector<int> numbers = {1, 2, 3, 4, 5};
-    for(int i=0; i<=4; i++){
-        std::cout << numbers[i] << " ";
-    }
+````C++
+std::vector<int> numbers = {1, 2, 3, 4, 5};
+for(int i=0; i<=4; i++){
+    std::cout << numbers[i] << " ";
+}
+````
 
 Advantages:
 * Concise code: Range-Based Loops make your code more concise and easier to read.
@@ -161,10 +166,11 @@ Advantages:
 An initializer list is a list of values enclosed in curly braces `{}`. It allows to initialize objects in a uniform way.
 
 Example:
-
-    int var1{24}; // initialize var1 with value 24
-    int var1 = {24}; // initialize var1 with value 24
-    char var2{'p'}; // initialize var2 with value 'p'
-    char var2 = {'p'}; // initialize var2 with value 'p'
-    std::vector<int> v{ 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
-    std::vector<int> v = { 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
+````C++
+int var1{24}; // initialize var1 with value 24
+int var1 = {24}; // initialize var1 with value 24
+char var2{'p'}; // initialize var2 with value 'p'
+char var2 = {'p'}; // initialize var2 with value 'p'
+std::vector<int> v{ 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
+std::vector<int> v = { 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
+````
