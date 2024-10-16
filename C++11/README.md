@@ -252,6 +252,172 @@ return x * x;
 * Better code readability: Using literal types can make your code more readable, as the values are explicitly specified.
 * Reduced errors: Since literal types are evaluated at compile-time, errors are detected earlier, reducing the likelihood of runtime errors.
 
+## Lambda Expressions
+It allows to define anonymous functions. They allow us to write a short code snippet to be used as a standard library function predicate.
+
+**Syntax**:
+````c++
+[capture](parameters) -> return-type {
+    function-body
+}
+````
+
+Lambdas have a capture list marked by `[ ]` where we can capture local variables by reference or copy, a parameter list with optional parameters marked with `( )`, and a lambda body marked
+with `{ }`.
+
+**Capture**
+The capture clause is used to specify the variables that are captured by the lambda expression.
+
+* **Empty capture**: `[]` does not capture any variables
+* **Value capture**: `[x]` captures x by value.
+* **Reference capture**: `[&x]` captures x by reference.
+* **Default capture**: `[=]` captures all variables in scope by value.
+* **Default reference capture**: `[&]` captures all variables in scope by reference.
+
+**Example**: **Empty capture**
+````c++
+auto add = [](int x, int y) -> int {
+    return x + y;
+};
+
+std::cout << add(2, 3) << std::endl; // Output: 5
+````
+The lambda expression has an empty capture clause, which means it does not capture any variables from the surrounding scope.
+
+**Example**: **Value capture**
+````c++
+int x = 5;
+auto add = [x](int y) -> int {
+    return x + y;
+};
+
+std::cout << add(3) << std::endl; // Output: 8
+````
+The lambda expression captures the variable x from the surrounding scope by value, which means that the lambda expression creates a copy of x that is used within the lambda expression.
+
+**Behavior**
+When a variable is captured by value in a lambda expression, the following behavior occurs:
+* Initialization: The captured variable is initialized with the value of the variable in the surrounding scope at the time the lambda expression is created.
+* Scope: The captured variable is in scope within the lambda expression, and its value can be accessed and modified within the lambda expression.
+* Lifetime: The captured variable remains in scope for the lifetime of the lambda expression, and its value is destroyed when the lambda expression goes out of scope.
+
+**Example**: **Reference capture**
+````c++
+int x = 5;
+auto add = [&x](int y) -> int {
+    return x + y;
+};
+
+x = 10;
+std::cout << add(3) << std::endl; // Output: 13
+````
+The lambda expression captures the variable x from the surrounding scope by reference, which means that the lambda expression has access to the original variable x and can modify it.
+
+**Behavior**
+When a variable is captured by reference in a lambda expression, the following behavior occurs:
+* Initialization: The captured variable is initialized with a reference to the variable in the surrounding scope at the time the lambda expression is created.
+* Scope: The captured variable is in scope within the lambda expression, and its value can be accessed and modified within the lambda expression.
+* Lifetime: The captured variable remains in scope for the lifetime of the lambda expression, and its value is not destroyed when the lambda expression goes out of scope.
+
+**Example**: **Default capture**
+````c++
+int x = 5;
+int y = 10;
+auto add = [=](int z) -> int {
+    return x + y + z;
+};
+
+x = 20;
+y = 30;
+
+std::cout << add(3) << std::endl; // Output: 18
+````
+The lambda expression captures all variables x and y in the surrounding scope by value using the value default capture [=]. When the values of x and y are modified, the lambda expression still uses their original values.
+
+**Example**: **Reference Default Capture**
+````c++
+int x = 5;
+int y = 10;
+auto add = [&](int z) -> int {
+    return x + y + z;
+};
+
+x = 20;
+y = 30;
+
+std::cout << add(3) << std::endl; // Output: 53
+````
+
+**Example**:
+
+````c++
+#include <iostream>
+
+int main() {
+    int x = 5;
+    int y = 20;
+    auto addValueCapture = [x](int y) -> int { 
+        return x + y;
+    };
+    std::cout << addValueCapture(2) << std::endl; // Output: 5+2=7
+
+    auto addReferenceCapture = [&x](int y) -> int {
+        return x + y;
+    };
+    x = 10;
+    std::cout << addReferenceCapture(2) << std::endl; // Output: 10+2=12
+
+    auto addDefaultCapture = [=](int z) -> int {
+        return x + y + z;
+    };
+    y = 10;
+    std::cout << addDefaultCapture(2) << std::endl; // Output: 10+20+2=32
+
+    auto addReferenceDefaultCapture = [&](int z) -> int {
+        return x + y + z;
+    };
+    std::cout << addReferenceDefaultCapture(2) << std::endl; // Output: 10+10+2=32
+
+    auto add = [x,&y](int a, int b) -> int {
+        return a+b+x+y;
+    };
+    x = 5;
+    y = 5;
+    std::cout << add(2,3) << std::endl; // Output: 10+5+2+3=32
+}
+````
+
+Lambda functions in C++ can be defined in various places, including:
+* **Inside a function body**: Lambda functions can be defined inside the body of another function. They are known as local lambda functions.
+* **As a class member**: Lambda functions can be defined as a member of a class. They are known as member lambda functions.
+* **As a namespace variable**: Lambda functions can be defined in a namespace, either in a header file or a source file.
+* **As a global variable**: Lambda functions can be defined at the global scope, outside of any function or class.
+
+**Benefits**:
+* Conciseness: Lambda functions are concise and can be defined inline within a larger expression. This makes them ideal for small, one-time use functions.
+* Readability: Lambda functions can improve code readability by encapsulating complex logic within a single expression.
+* Flexibility: Lambda functions can capture variables from the surrounding scope, making them flexible and reusable.
+* Anonymous: Lambda functions do not require a declared name, making them useful when you need a small, one-time use function.
+* Type Inference: Many programming languages can infer the type of a lambda function, making it easier to write and maintain code.
+* Closures: Lambda functions can be used to create closures, which are functions that have access to their own scope and can capture variables from that scope.
+* Higher-Order Functions: Lambda functions can be used as higher-order functions, which are functions that take other functions as arguments or return functions as output.
+* Event Handling: Lambda functions are often used in event handling, such as handling button clicks or network requests.
+* Data Processing: Lambda functions are useful in data processing, such as data transformation, filtering, or mapping.
+* Concurrency: Lambda functions can be used in concurrent programming, such as parallel processing or asynchronous programming.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Range-Based Loops
 
 A Range-Based Loop is a type of loop that allows you to iterate over a range of values, such as the elements of a container or an array, without having to manually manage the loop counter or index.
