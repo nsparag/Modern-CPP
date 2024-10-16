@@ -651,12 +651,15 @@ bool isNoexcept = noexcept(myFunction());
 * Improved Performance: Functions declared as noexcept are more efficient because the compiler can optimize them without considering the possibility of exceptions.
 * Better Code Quality: The noexcept specifier helps to ensure that functions are written to handle errors correctly and avoids the use of exceptions for flow control.
 
+## `static_assert`
+It is a keyword used to verify that a constant expression is true at compile-time.
+
 **Syntax**:
 ````c++
-
+static_assert(expression, message);
 ````
 
 **Example**:
 ````c++
-
+static_assert(sizeof(int) == 4, "Incorrect size for int");
 ````
