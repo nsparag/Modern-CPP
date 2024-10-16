@@ -286,12 +286,195 @@ Advantages:
 ## Initializer Lists
 An initializer list is a list of values enclosed in curly braces `{}`. It allows to initialize objects in a uniform way.
 
-Example:
+**Syntax**:
+````c++
+Type variable_name = {value1, value2, ..., valueN};
+````
+
+**Example 1**:
 ````C++
-int var1{24}; // initialize var1 with value 24
-int var1 = {24}; // initialize var1 with value 24
-char var2{'p'}; // initialize var2 with value 'p'
-char var2 = {'p'}; // initialize var2 with value 'p'
-std::vector<int> v{ 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
-std::vector<int> v = { 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5
+int var1{24}; // initialize var1 with value 24 - Direct initialization
+int var1 = {24}; // initialize var1 with value 24 - Copy initialization
+char var2{'p'}; // initialize var2 with value 'p'- Direct initialization
+char var2 = {'p'}; // initialize var2 with value 'p' - Copy initialization
+std::vector<int> v{ 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5 - Direct initialization
+std::vector<int> v = { 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5 - Copy initialization
+````
+
+**Example 2**:
+````C++
+struct Person {
+    int age;
+    std::string name;
+};
+Person person = {30, "John"}; // Aggregate initialization
+````
+
+## brace-or-equal initializers
+Brace-or-equal initializers are a feature in C++ that allows for initializing objects with either the `=` operator or with curly brackets `{}`.
+
+**Syntax**:
+````c++
+Type variable_name = value; // Equal initializer
+Type variable_name{value}; // Brace initializer
+````
+**Difference**:
+
+| Characteristic    |    Equal Initializer | Brace Initializer |
+|:----------|:----------:|:----------:|
+| Initialization Method | Uses the = operator	| Uses curly brackets {}| 
+| Syntax	| Type variable_name = value;| 	Type variable_name{value};| 
+| Implicit Conversions	| Allows implicit conversions| 	Prevents implicit conversions| 
+| Narrowing Conversions	| Allows narrowing conversions	| Prevents narrowing conversions| 
+| Type Deduction	| Supports type deduction	| Does not support type deduction| 
+| Example| 	int x = 3.14;| 	int x{3.14};| 
+
+## nullptr
+`nullptr` is a keyword in C++ that was introduced in C++11 as a replacement for the older `NULL` macro. 
+`nullptr` itself is of type `std::nullptr_t` and can be implicitly converted into pointer types, and unlike `NULL`, not convertible to integral types except bool.
+
+**Example**:
+````c++
+int* ptr = nullptr;
+````
+## long long
+A data type that represents a 64-bit integer value.
+
+## char16_t and char32_t
+Two new character types that were introduced to support Unicode characters. They represent 16 bit and 32 bit characters values respectively.
+
+Example:
+````c++
+char16_t c1 = u'\u1234'; // char16_t
+char32_t c2 = U'\U00012345'; // char32_t
+````
+
+## Type Aliases
+A type alias is a new name given to an existing data type. It is a way to create a shorthand or a more meaningful name for a type.
+
+**Syntax**:
+````c++
+using new_type_name = existing_type;
+````
+
+**Example**:
+````c++
+using Byte = unsigned char;
+````
+
+**Benefits**
+* Improved Readability: Type aliases can make code more readable by providing a more meaningful name for a type.
+* Reduced Complexity: Type aliases can simplify complex type declarations by breaking them down into smaller, more manageable parts.
+* Improved Maintainability: Type aliases can make code easier to maintain by allowing developers to change the underlying type without affecting the rest of the code.
+* Common Use Cases
+
+**Use Cases**
+* Renaming built-in types: Type aliases can be used to create more meaningful names for built-in types, such as Byte for unsigned char.
+* Simplifying complex types: Type aliases can be used to simplify complex type declarations, such as Vector for std::vector<float>.
+* Defining domain-specific types: Type aliases can be used to define domain-specific types, such as Point for std::pair<float, float>.
+
+## User-Defined Literals
+User-defined literals are a way to define new literal types that can be used in your code. 
+
+**Syntax**:
+````c++
+long double operator "" ldl(long double);
+unsigned long long operator "" ulll(unsigned long long);
+long long operator "" lll(long long);
+unsigned long operator "" ul(unsigned long);
+long operator "" l(long);
+unsigned operator "" u(unsigned);
+const char* operator "" s(const char*, size_t);
+char16_t operator "" su(const char16_t*, size_t);
+char32_t operator "" suu(const char32_t*, size_t);
+wchar_t operator "" sw(const wchar_t*, size_t);
+````
+
+**Example**:
+````c++
+long long operator "" _sec(long long value) {
+    return value * 1000; // convert seconds to milliseconds
+}
+
+int main() {
+    auto duration = 10_sec; // equivalent to 10000 milliseconds
+    // do something with the duration
+    return 0;
+}
+````
+A user-defined literal `_sec` that takes a `long long` value and returns the equivalent time duration in milliseconds.
+
+**Benefits**
+* Improved readability: User-defined literals can make your code more readable by allowing you to express specific types of data in a more intuitive way.
+* Increased expressiveness: User-defined literals can increase the expressiveness of your code by allowing you to define new literal types that are tailored to your specific needs.
+* Improved maintainability: User-defined literals can improve the maintainability of your code by making it easier to modify or extend existing code.
+
+## Attributes
+A way to provide additional information about a function, variable, or type. 
+
+**Syntax**:
+````c++
+[[attribute]] declaration
+````
+
+**Example**:
+````c++
+[[deprecated]] void old_function() {
+    // do something
+}
+````
+The `[[deprecated]]` attribute is used to mark the `old_function` function as deprecated.
+
+Some of the Standard attitbutes:
+* `[[deprecated]]`: marks a function, variable, or type as deprecated.
+* `[[fallthrough]]`: indicates that a fallthrough from a switch statement is intentional.
+* `[[maybe_unused]]`: indicates that a variable or function parameter may be unused.
+* `[[nodiscard]]`: indicates that the return value of a function should not be ignored.
+* `[[noreturn]]`: indicates that a function does not return.
+
+**User Defined Attributes**:
+Example of defining a custom attribute to mark a function as a unit test:
+````c++
+#define unittest [[attribute(unittest)]]
+
+unittest void test_function() {
+    // do something
+}
+````
+
+## Variadic Templates
+It allows a function or class to take a variable number of template parameters.
+
+**Synatx**:
+````c++
+template<typename... Args>
+````
+
+**Example**:
+````c++
+template<typename... Args>
+void printArgs(Args... args) {
+    ((std::cout << args << " "), ...);
+    std::cout << std::endl;
+}
+
+int main() {
+    printArgs(1, "hello", 3.14);
+    printArgs(1, 3.14, "hello");
+    return 0;
+}
+````
+Here, printArgs that takes a variable number of arguments using the Args... syntax. We then use the ((std::cout << args << " "), ...) syntax to print each argument, followed by a space.
+
+
+
+
+**Syntax**:
+````c++
+
+````
+
+**Example**:
+````c++
+
 ````
