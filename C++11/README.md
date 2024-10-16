@@ -114,22 +114,143 @@ Benefits of Move Semantics:
 ## Rvalue Reference
 
 Rvalue references are a type of reference that allows us to bind to an rvalue. 
-An rvalue is an expression that can appear on the right-hand side of an assignment. 
+An rvalue is an expression that can appear on the right-hand side of an assignment. An expression is _rvalue_ if it it results in a temporary object.
 Examples of rvalue
 ````C++
-int var = 2;    // 2 is rvalue
-int variable = foo(); // function call is rvalue
+int var = 2;    // 2 is rvalue & var is lvalue
+int variable = foo(); // function call is rvalue and & variable is lvalue
 ````       
-An rvalue reference is a type of reference that can bind to an rvalue. It is declared using the `&&` syntax. Rvalue references work by allowing us to bind to an rvalue and extend its lifetime. When an rvalue reference is created, it binds to the rvalue and prevents it from being destroyed until the reference goes out of scope.
+An rvalue reference is a type of reference that can bind to an rvalue. It is declared using the `&&` syntax. When an rvalue reference is created, it binds to the rvalue and prevents it from being destroyed until the reference goes out of scope.
 
 Example: 
 ````C++
 int main() {
-    int&& r = 5; // r binds to the rvalue 5
+    int&& r = 5; // r binds to the rvalue 5; Rvalue reference (a reference to a temporary value)
     std::cout << r << std::endl; // prints 5
     return 0;
 }
 ````
+Rvalue Reference is useful when the function needs to implement move semantics or transfer ownership of an object.
+
+## Move Constructor
+A move constructor is a special type of constructor in C++ that is used to transfer the ownership of an object from one instance to another.
+When an object is created, it typically acquires resources such as memory, file handles, or network connections. However, when an object is copied, the copied object also acquires the same resources, which can lead to problems such as:
+* Resource leaks: When the copied object is destroyed, it does not release the resources, causing a resource leak.
+* Data corruption: When multiple objects access the same resource, it can lead to data corruption.
+
+**Syntax**
+````C++
+class MyClass {
+public:
+    MyClass(MyClass&& other) noexcept {
+        // Transfer ownership of resources from other to this object
+    }
+};
+````
+When a move constructor is called, it transfers the ownership of the resources from the source object to the target object. The source object is left in a valid but unspecified state, which means that it can be safely destroyed or reassigned.
+
+**Example**:
+````c++
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() {
+        std::cout << "Default constructor" << std::endl;
+    }
+
+    MyClass(MyClass&& other) noexcept {
+        std::cout << "Move constructor" << std::endl;
+    }
+
+    ~MyClass() {
+        std::cout << "Destructor" << std::endl;
+    }
+};
+
+int main() {
+    MyClass obj1;
+    MyClass obj2 = std::move(obj1);
+
+    return 0;
+}
+````
+This shows that the move constructor is used to transfer ownership from obj1 to obj2, and then both objects are destroyed.
+## Move Assignment Operators
+
+## Scoped Enums
+A type of enumeration that limits the scope of the enumeration values to the enum itself, rather than having them be part of the surrounding scope.
+
+**Example**:
+````c++
+#include <iostream>
+enum class enumColor {
+    RED,
+    GREEN,
+    BLUE
+};
+
+enum Color{
+    RED,
+    GREEN,
+    BLUE
+};
+
+int main() {
+    enumColor color = enumColor::RED;
+    std::cout << "color is " << RED << std::endl;
+    // You can't use RED directly, you need to use enumColor::RED
+    std::cout << "color is " << static_cast<int>(color) << std::endl; // static_cast is used because `<<` operator is not overloaded for scoped enums.
+    return 0;
+}
+````
+In this example, enumColor is a scoped enum, and its values (RED, GREEN, BLUE) are only accessible through the enumColor enum itself. This is in contrast to unscoped enums, where the values would be directly accessible in the surrounding scope.
+
+**Benefits**
+* Improved Readability: Scoped enums make it clear that a value is part of a specific enumeration, which can improve readability and avoid ambiguity.
+* Large Projects: Use scoped enums in large projects to improve readability, avoid ambiguity, and prevent type errors.
+* Complex Codebases: Use scoped enums in complex codebases where there are many enumeration values and overlapping scopes.
+
+## `constexpr` and literal types
+It allows to evaluate function or expressions at compile-time.
+
+**Example**: constexpr Variable
+````c++
+constexpr const double PI = 3.14159; // a compile-time constant
+constexpr int variable = 10; // a compile-time constant
+double radius = 2; //
+constexpr double circlePerimeter = 2*PI*radius;    // compile-time error as value of radius is not known at compile time
+````
+**Example**: constexpr Function
+````c++
+constexpr int square(int x) {
+return x * x;
+}
+````
+**Benefits**:
+* Improved Performance: constexpr functions can improve performance by reducing the overhead of runtime evaluation.
+* Increased Efficiency: constexpr can reduce the number of runtime computations, which can improve the efficiency of your code.
+* Better Code Optimization: constexpr allows the compiler to perform better optimizations, which can result in smaller and faster code.
+* Better Error Messages: constexpr functions provide better error messages than runtime errors, which can make it easier to diagnose and fix issues.
+
+**Literal types** in C++ are types that can be initialized with a constant expression, such as an integer or floating-point literal. These types are also known as "literal type" or "compile-time constant type".
+* Integer literals (e.g., 1, 2, 3)
+* Floating-point literals (e.g., 3.14, -0.5)
+* Character literals (e.g., 'a', 'B')
+* String literals (e.g., "hello", "world")
+* Boolean literals (e.g., true, false)
+* Null pointer literals (e.g., nullptr)
+
+**Characteristics**:
+* They can be initialized with a constant expression.
+* They are evaluated at compile-time, which means their values are known at compile-time.
+* They are not subject to runtime evaluation or execution.
+* They do not have any side effects.
+
+**Benefits**:
+* Improved performance: Since literal types are evaluated at compile-time, they do not incur any runtime overhead.
+* Better code readability: Using literal types can make your code more readable, as the values are explicitly specified.
+* Reduced errors: Since literal types are evaluated at compile-time, errors are detected earlier, reducing the likelihood of runtime errors.
 
 ## Range-Based Loops
 
