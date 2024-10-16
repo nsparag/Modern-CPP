@@ -632,8 +632,24 @@ int main() {
 ````
 Here, printArgs that takes a variable number of arguments using the Args... syntax. We then use the ((std::cout << args << " "), ...) syntax to print each argument, followed by a space.
 
+## `noexcept` Specifier and `noexcept` Operator
+The noexcept specifier and noexcept operator are used to specify that a function does not throw any exceptions.
 
+**`noexcept` Specifier**
 
+The noexcept specifier is used to declare that a function does not throw any exceptions. 
+````c++
+void myFunction() noexcept;
+````
+**`noexcept` Operator**
+
+The noexcept operator is used to check whether a function is declared as noexcept. It returns true if the function is declared as noexcept and false otherwise.
+````c++
+bool isNoexcept = noexcept(myFunction());
+````
+**Benefits**
+* Improved Performance: Functions declared as noexcept are more efficient because the compiler can optimize them without considering the possibility of exceptions.
+* Better Code Quality: The noexcept specifier helps to ensure that functions are written to handle errors correctly and avoids the use of exceptions for flow control.
 
 **Syntax**:
 ````c++
