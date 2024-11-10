@@ -1,6 +1,6 @@
 # C++11
 
-C++11 is an ISO standard published in the year 2011. 
+C++11 is an ISO/IEC 14882:2011 standard published in the year 2011. 
 
 To compile a code written in C++11, one need to use `-std=c++11` flag to the command line compilation string. If we want to compile a file `mainFile.cpp` then the command line string to compile this file will be 
 ````C++
