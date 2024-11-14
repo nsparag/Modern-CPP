@@ -34,7 +34,8 @@ g++ -std=c++11 mainFile.cpp
     * static_assert
     * `alignof` and `alignas`
     * Attributes
-    * 
+    * `default` function
+    * `delete` function
 
 ## Move semantics
 
@@ -693,12 +694,35 @@ unittest void test_function() {
 }
 ````
 
+## `default` function
+
+Explicitly defaulted functions in C++ are a feature that allows you to explicitly declare a special member function (such as constructors, destructors, assignment operators, etc.) as = default in the class definition. This tells the compiler to generate a default implementation for that function, just like it would if the function wasn't declared at all.
+It is achieved by writing `default` in the function declaration.
+
+**Example**:
+````c++
+class temp
+{
+    temp() = default; //The default constructor is explicitly stated.
+    temp(OtherType value);
+};
+````
+
+## `delete` function
+It allows a function to be explicitly disabled. It is achieved by keyword `delete` in the function declaration.
+
+**Example**:
+````c++
+void noInt(double i);
+void noInt(int) = delete;
+````
+An attempt to call noInt() with an int parameter will be rejected by the compiler, instead of performing a silent conversion to double. Calling noInt() with a float still works.
 
 ----------------------------------------------------------------------------------------------
 
-## `default` function
 
-## `delete` function
+
+
 
 
 
