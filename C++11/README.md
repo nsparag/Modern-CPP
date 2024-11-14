@@ -19,6 +19,12 @@ g++ -std=c++11 mainFile.cpp
     * nullptr
     * Range-Based Loops
     * Lambda Expressions
+    * Automatic Type Deduction
+    * Trailing Return Types
+    * `final` specifier
+    * `Override` specifier
+    * Scoped enum
+    * Type Aliases
   * Functionality Improvement
 
 ## Move semantics
@@ -370,7 +376,7 @@ Lambda functions in C++ can be defined in various places, including:
 * Event Handling: Lambda functions are often used in event handling, such as handling button clicks or network requests.
 * Data Processing: Lambda functions are useful in data processing, such as data transformation, filtering, or mapping.
 * Concurrency: Lambda functions can be used in concurrent programming, such as parallel processing or asynchronous programming.
-----------------------------------------------------------------------------------------------
+
 ## Automatic Type Deduction
 
 With auto, you can let the compiler figure out the type of the variable, making your code more concise and easier to read.
@@ -402,6 +408,120 @@ decltype(var1+5) var2; // var2 is of type int
 * Template Metaprogramming: decltype is commonly used in template metaprogramming to deduce the type of expressions.
 * SFINAE: decltype can be used with SFINAE to enable or disable function templates based on the type of expressions.
 * Variable Declaration: decltype can be used to deduce the type of variables, making the code more concise and easier to maintain.
+
+## Trailing Return Types
+It deals about specifying the return type of a function after the function name. his syntax is especially useful when the return type depends on the template parameters of the function.
+
+**Example 1:**: the function will return int type value
+````C++
+auto calculateArea(int length, int width) -> int {
+    return length * width;
+}
+````
+**Example 2:** the function will return value of type (x+y)
+````C++
+template <typename T, typename U>
+auto add(T x, U y) -> decltype(x + y) {
+    return x + y;
+}
+````
+By using trailing return types, you can write more expressive and maintainable code in C++.
+
+## `final` specifier
+The final keyword is used to specify that a virtual function cannot be overridden in a derived class. 
+It is typically used to prevent unwanted overrides and ensure that a function behaves consistently across all derived classes.
+
+**Example:**
+````C++
+class Base {
+public:
+    virtual void foo() final {
+        // Implementation
+    }
+};
+
+class Derived : public Base {
+public:
+    void foo() override { // Error: cannot override final function
+    }
+};
+````
+## `Override` specifier
+The override keyword is used to specify that a virtual function is intended to override a function in a base class. It is typically used to ensure that a function is correctly overriding a base class function, rather than introducing a new function with the same name.
+````C++
+class Base {
+public:
+    virtual void foo() {
+        // Implementation
+    }
+};
+
+class Derived : public Base {
+public:
+    void foo() override { // Correct override of Base::foo()
+        // Implementation
+    }
+};
+````
+
+## Scoped Enums
+A type of enumeration that limits the scope of the enumeration values to the enum itself, rather than having them be part of the surrounding scope.
+
+**Example**:
+````c++
+#include <iostream>
+enum class enumColor {
+    RED,
+    GREEN,
+    BLUE
+};
+
+enum Color{
+    RED,
+    GREEN,
+    BLUE
+};
+
+int main() {
+    enumColor color = enumColor::RED;
+    std::cout << "color is " << RED << std::endl;
+    // You can't use RED directly, you need to use enumColor::RED
+    std::cout << "color is " << static_cast<int>(color) << std::endl; // static_cast is used because `<<` operator is not overloaded for scoped enums.
+    return 0;
+}
+````
+In this example, enumColor is a scoped enum, and its values (RED, GREEN, BLUE) are only accessible through the enumColor enum itself. This is in contrast to unscoped enums, where the values would be directly accessible in the surrounding scope.
+
+**Benefits**
+* Improved Readability: Scoped enums make it clear that a value is part of a specific enumeration, which can improve readability and avoid ambiguity.
+* Large Projects: Use scoped enums in large projects to improve readability, avoid ambiguity, and prevent type errors.
+* Complex Codebases: Use scoped enums in complex codebases where there are many enumeration values and overlapping scopes.
+
+## Type Aliases
+A type alias is a new name given to an existing data type. It is a way to create a shorthand or a more meaningful name for a type.
+
+**Syntax**:
+````c++
+using new_type_name = existing_type;
+````
+
+**Example**:
+````c++
+using Byte = unsigned char;
+````
+
+**Benefits**
+* Improved Readability: Type aliases can make code more readable by providing a more meaningful name for a type.
+* Reduced Complexity: Type aliases can simplify complex type declarations by breaking them down into smaller, more manageable parts.
+* Improved Maintainability: Type aliases can make code easier to maintain by allowing developers to change the underlying type without affecting the rest of the code.
+* Common Use Cases
+
+**Use Cases**
+* Renaming built-in types: Type aliases can be used to create more meaningful names for built-in types, such as Byte for unsigned char.
+* Simplifying complex types: Type aliases can be used to simplify complex type declarations, such as Vector for std::vector<float>.
+* Defining domain-specific types: Type aliases can be used to define domain-specific types, such as Point for std::pair<float, float>.
+
+----------------------------------------------------------------------------------------------
 
 ## `default` function
 
