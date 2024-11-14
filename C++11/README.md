@@ -6,6 +6,183 @@ To compile a code written in C++11, one need to use `-std=c++11` flag to the com
 ````C++
 g++ -std=c++11 mainFile.cpp
 ````
+* Core Language Enhancements
+  * Runtime performance enhancement
+    * Move semantics
+    * Rvalue reference
+    * constexpr  
+  * Build-time performance enhancement
+    * Extern template
+  * Usability enhancement
+    * Initializer lists
+    * 
+  * Functionality Improvement
+
+## Move semantics
+
+It allows objects to be transferred from one location to another, without copying the object. It means transfer ownership of some resource it manages to another object.
+
+It works based on following points:
+* **Rvalue References**: Rvalue references are a type of reference that can bind to an rvalue (an expression that can appear on the right-hand side of an assignment). They are used to implement move semantics.
+* **Move Constructors**: Move constructors are special constructors that are used to transfer the contents of an object when it is moved. They take an rvalue reference to the object being moved as an argument.
+* **Move Assignment Operators**: Move assignment operators are special assignment operators that are used to transfer the contents of an object when it is moved. They take an rvalue reference to the object being moved as an argument.
+* **std::move**: The `std::move` function is used to convert an lvalue into an rvalue, allowing it to be moved.
+
+Benefits of Move Semantics:
+* Improved Performance: Move semantics can improve performance by reducing the number of copies made when objects are transferred.
+* Reduced Memory Allocation: Move semantics can reduce memory allocation by allowing objects to be transferred without creating a new copy.
+* Simplified Code: Move semantics can simplify code by reducing the need for copy constructors and copy assignment operators.
+
+## Rvalue Reference
+
+Rvalue references are a type of reference that allows us to bind to an rvalue. 
+An rvalue is an expression that can appear on the right-hand side of an assignment. An expression is _rvalue_ if it it results in a temporary object.
+Examples of rvalue
+````C++
+int var = 2;    // 2 is rvalue & var is lvalue
+int variable = foo(); // function call is rvalue and & variable is lvalue
+````       
+An rvalue reference is a type of reference that can bind to an rvalue. It is declared using the `&&` syntax. When an rvalue reference is created, it binds to the rvalue and prevents it from being destroyed until the reference goes out of scope.
+
+Example: 
+````C++
+int main() {
+    int&& r = 5; // r binds to the rvalue 5; Rvalue reference (a reference to a temporary value)
+    std::cout << r << std::endl; // prints 5
+    return 0;
+}
+````
+Rvalue Reference is useful when the function needs to implement move semantics or transfer ownership of an object.
+
+## Move Constructor
+A move constructor is a special type of constructor in C++ that is used to transfer the ownership of an object from one instance to another.
+When an object is created, it typically acquires resources such as memory, file handles, or network connections. However, when an object is copied, the copied object also acquires the same resources, which can lead to problems such as:
+* Resource leaks: When the copied object is destroyed, it does not release the resources, causing a resource leak.
+* Data corruption: When multiple objects access the same resource, it can lead to data corruption.
+
+**Syntax**
+````C++
+class MyClass {
+public:
+    MyClass(MyClass&& other) noexcept {
+        // Transfer ownership of resources from other to this object
+    }
+};
+````
+When a move constructor is called, it transfers the ownership of the resources from the source object to the target object. The source object is left in a valid but unspecified state, which means that it can be safely destroyed or reassigned.
+
+**Example**:
+````c++
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() {
+        std::cout << "Default constructor" << std::endl;
+    }
+
+    MyClass(MyClass&& other) noexcept {
+        std::cout << "Move constructor" << std::endl;
+    }
+
+    ~MyClass() {
+        std::cout << "Destructor" << std::endl;
+    }
+};
+
+int main() {
+    MyClass obj1;
+    MyClass obj2 = std::move(obj1);
+
+    return 0;
+}
+````
+This shows that the move constructor is used to transfer ownership from obj1 to obj2, and then both objects are destroyed.
+
+## `constexpr` 
+It allows to evaluate function or expressions at compile-time.
+
+**Example**: constexpr Variable
+````c++
+constexpr const double PI = 3.14159; // a compile-time constant
+constexpr int variable = 10; // a compile-time constant
+double radius = 2; //
+constexpr double circlePerimeter = 2*PI*radius;    // compile-time error as value of radius is not known at compile time
+````
+**Example**: constexpr Function
+````c++
+constexpr int square(int x) {
+return x * x;
+}
+````
+**Benefits**:
+* Improved Performance: constexpr functions can improve performance by reducing the overhead of runtime evaluation.
+* Increased Efficiency: constexpr can reduce the number of runtime computations, which can improve the efficiency of your code.
+* Better Code Optimization: constexpr allows the compiler to perform better optimizations, which can result in smaller and faster code.
+* Better Error Messages: constexpr functions provide better error messages than runtime errors, which can make it easier to diagnose and fix issues.
+
+
+## `extern template`
+It is a feature in C++11 that allows you to specify that a template instantiation should be defined in a separate translation unit, rather than in the current translation unit. It is analogous to extern data declarations.
+
+**Example**:
+````c++
+extern template class MyClass<int>;
+````
+## Initializer Lists
+An initializer list is a list of values enclosed in curly braces `{}`. It allows to initialize objects in a uniform way.
+
+**Syntax**:
+````c++
+Type variable_name = {value1, value2, ..., valueN};
+````
+
+**Example 1**:
+````C++
+int var1{24}; // initialize var1 with value 24 - Direct initialization
+int var1 = {24}; // initialize var1 with value 24 - Copy initialization
+char var2{'p'}; // initialize var2 with value 'p'- Direct initialization
+char var2 = {'p'}; // initialize var2 with value 'p' - Copy initialization
+std::vector<int> v{ 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5 - Direct initialization
+std::vector<int> v = { 1, 2, 3, 4, 5 }; // initialize vector v with values 1, 2, 3, 4, 5 - Copy initialization
+````
+
+**Example 2**:
+````C++
+struct Person {
+    int age;
+    std::string name;
+};
+Person person = {30, "John"}; // Aggregate initialization
+````
+
+## brace-or-equal initializers
+Brace-or-equal initializers are a feature in C++ that allows for initializing objects with either the `=` operator or with curly brackets `{}`.
+
+**Syntax**:
+````c++
+Type variable_name = value; // Equal initializer
+Type variable_name{value}; // Brace initializer
+````
+**Difference**:
+
+| Characteristic    |    Equal Initializer | Brace Initializer |
+|:----------|:----------:|:----------:|
+| Initialization Method | Uses the = operator	| Uses curly brackets {}| 
+| Syntax	| Type variable_name = value;| 	Type variable_name{value};| 
+| Implicit Conversions	| Allows implicit conversions| 	Prevents implicit conversions| 
+| Narrowing Conversions	| Allows narrowing conversions	| Prevents narrowing conversions| 
+| Type Deduction	| Supports type deduction	| Does not support type deduction| 
+| Example| 	int x = 3.14;| 	int x{3.14};| 
+
+## nullptr
+`nullptr` is a keyword in C++ that was introduced in C++11 as a replacement for the older `NULL` macro. 
+`nullptr` itself is of type `std::nullptr_t` and can be implicitly converted into pointer types, and unlike `NULL`, not convertible to integral types except bool.
+
+**Example**:
+````c++
+int* ptr = nullptr;
+----------------------------------------------------------------------------------------------
 ## Automatic Type Deduction
 
 With auto, you can let the compiler figure out the type of the variable, making your code more concise and easier to read.
@@ -96,86 +273,7 @@ auto add(T x, U y) -> decltype(x + y) {
 ````
 By using trailing return types, you can write more expressive and maintainable code in C++.
 
-## Move semantics
 
-It allows objects to be transferred from one location to another, without copying the object. It means transfer ownership of some resource it manages to another object.
-
-It works based on following points:
-* **Rvalue References**: Rvalue references are a type of reference that can bind to an rvalue (an expression that can appear on the right-hand side of an assignment). They are used to implement move semantics.
-* **Move Constructors**: Move constructors are special constructors that are used to transfer the contents of an object when it is moved. They take an rvalue reference to the object being moved as an argument.
-* **Move Assignment Operators**: Move assignment operators are special assignment operators that are used to transfer the contents of an object when it is moved. They take an rvalue reference to the object being moved as an argument.
-* **std::move**: The `std::move` function is used to convert an lvalue into an rvalue, allowing it to be moved.
-
-Benefits of Move Semantics:
-* Improved Performance: Move semantics can improve performance by reducing the number of copies made when objects are transferred.
-* Reduced Memory Allocation: Move semantics can reduce memory allocation by allowing objects to be transferred without creating a new copy.
-* Simplified Code: Move semantics can simplify code by reducing the need for copy constructors and copy assignment operators.
-
-## Rvalue Reference
-
-Rvalue references are a type of reference that allows us to bind to an rvalue. 
-An rvalue is an expression that can appear on the right-hand side of an assignment. An expression is _rvalue_ if it it results in a temporary object.
-Examples of rvalue
-````C++
-int var = 2;    // 2 is rvalue & var is lvalue
-int variable = foo(); // function call is rvalue and & variable is lvalue
-````       
-An rvalue reference is a type of reference that can bind to an rvalue. It is declared using the `&&` syntax. When an rvalue reference is created, it binds to the rvalue and prevents it from being destroyed until the reference goes out of scope.
-
-Example: 
-````C++
-int main() {
-    int&& r = 5; // r binds to the rvalue 5; Rvalue reference (a reference to a temporary value)
-    std::cout << r << std::endl; // prints 5
-    return 0;
-}
-````
-Rvalue Reference is useful when the function needs to implement move semantics or transfer ownership of an object.
-
-## Move Constructor
-A move constructor is a special type of constructor in C++ that is used to transfer the ownership of an object from one instance to another.
-When an object is created, it typically acquires resources such as memory, file handles, or network connections. However, when an object is copied, the copied object also acquires the same resources, which can lead to problems such as:
-* Resource leaks: When the copied object is destroyed, it does not release the resources, causing a resource leak.
-* Data corruption: When multiple objects access the same resource, it can lead to data corruption.
-
-**Syntax**
-````C++
-class MyClass {
-public:
-    MyClass(MyClass&& other) noexcept {
-        // Transfer ownership of resources from other to this object
-    }
-};
-````
-When a move constructor is called, it transfers the ownership of the resources from the source object to the target object. The source object is left in a valid but unspecified state, which means that it can be safely destroyed or reassigned.
-
-**Example**:
-````c++
-#include <iostream>
-
-class MyClass {
-public:
-    MyClass() {
-        std::cout << "Default constructor" << std::endl;
-    }
-
-    MyClass(MyClass&& other) noexcept {
-        std::cout << "Move constructor" << std::endl;
-    }
-
-    ~MyClass() {
-        std::cout << "Destructor" << std::endl;
-    }
-};
-
-int main() {
-    MyClass obj1;
-    MyClass obj2 = std::move(obj1);
-
-    return 0;
-}
-````
-This shows that the move constructor is used to transfer ownership from obj1 to obj2, and then both objects are destroyed.
 ## Move Assignment Operators
 
 ## Scoped Enums
@@ -211,27 +309,7 @@ In this example, enumColor is a scoped enum, and its values (RED, GREEN, BLUE) a
 * Large Projects: Use scoped enums in large projects to improve readability, avoid ambiguity, and prevent type errors.
 * Complex Codebases: Use scoped enums in complex codebases where there are many enumeration values and overlapping scopes.
 
-## `constexpr` and literal types
-It allows to evaluate function or expressions at compile-time.
-
-**Example**: constexpr Variable
-````c++
-constexpr const double PI = 3.14159; // a compile-time constant
-constexpr int variable = 10; // a compile-time constant
-double radius = 2; //
-constexpr double circlePerimeter = 2*PI*radius;    // compile-time error as value of radius is not known at compile time
-````
-**Example**: constexpr Function
-````c++
-constexpr int square(int x) {
-return x * x;
-}
-````
-**Benefits**:
-* Improved Performance: constexpr functions can improve performance by reducing the overhead of runtime evaluation.
-* Increased Efficiency: constexpr can reduce the number of runtime computations, which can improve the efficiency of your code.
-* Better Code Optimization: constexpr allows the compiler to perform better optimizations, which can result in smaller and faster code.
-* Better Error Messages: constexpr functions provide better error messages than runtime errors, which can make it easier to diagnose and fix issues.
+## literal types
 
 **Literal types** in C++ are types that can be initialized with a constant expression, such as an integer or floating-point literal. These types are also known as "literal type" or "compile-time constant type".
 * Integer literals (e.g., 1, 2, 3)
@@ -652,7 +730,7 @@ bool isNoexcept = noexcept(myFunction());
 * Better Code Quality: The noexcept specifier helps to ensure that functions are written to handle errors correctly and avoids the use of exceptions for flow control.
 
 ## `static_assert`
-It is a keyword used to verify that a constant expression is true at compile-time.
+It is a keyword used to verify that a constant expression is true at compile-time. Here, 'expression' is a constant expression that can be evaluated at compile time, and 'message' is a string literal that is displayed if the assertion fails.
 
 **Syntax**:
 ````c++
@@ -662,4 +740,29 @@ static_assert(expression, message);
 **Example**:
 ````c++
 static_assert(sizeof(int) == 4, "Incorrect size for int");
+````
+
+## **`alignof` and `alignas`**
+
+`alignof` is an operator that returns the alignment requirement of a type. The alignment requirement is the minimum alignment that must be satisfied for an object of that type to be properly aligned.
+
+`alignas` is a specifier that can be used to specify the alignment requirement for a variable or a type.
+
+**Syntax**
+````c++
+alignof(type)
+alignof(expression)
+
+alignas(type)
+alignas(expression)
+alignas(alignment value)
+````
+
+Here, `type` is the type for which you want to know the alignment requirement, and `expression` is an expression that can be evaluated at compile-time to determine the underlying type. 
+Also, `type` is a type that has an alignment requirement that you want to use, `expression` is an expression that can be evaluated at compile-time to determine the underlying type, and `alignment value` is a constant expression that specifies the alignment requirement.
+
+**Example**:
+````c++
+std::cout << "Alignment of int: " << alignof(int) << std::endl;    // display the alignment required by int
+alignas(double) char arr[10];  // Each element of arr will be aligned to double
 ````
