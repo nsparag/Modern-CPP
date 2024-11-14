@@ -26,6 +26,15 @@ g++ -std=c++11 mainFile.cpp
     * Scoped enum
     * Type Aliases
   * Functionality Improvement
+    * Variadic templates
+    * long long
+    * char16_t and char32_t
+    * literal types
+    * User-Defined Literals
+    * static_assert
+    * `alignof` and `alignas`
+    * Attributes
+    * 
 
 ## Move semantics
 
@@ -520,6 +529,170 @@ using Byte = unsigned char;
 * Renaming built-in types: Type aliases can be used to create more meaningful names for built-in types, such as Byte for unsigned char.
 * Simplifying complex types: Type aliases can be used to simplify complex type declarations, such as Vector for std::vector<float>.
 * Defining domain-specific types: Type aliases can be used to define domain-specific types, such as Point for std::pair<float, float>.
+
+## Variadic Templates
+It allows a function or class to take a variable number of template parameters.
+
+**Synatx**:
+````c++
+template<typename... Args>
+````
+
+**Example**:
+````c++
+template<typename... Args>
+void printArgs(Args... args) {
+    ((std::cout << args << " "), ...);
+    std::cout << std::endl;
+}
+
+int main() {
+    printArgs(1, "hello", 3.14);
+    printArgs(1, 3.14, "hello");
+    return 0;
+}
+````
+Here, printArgs that takes a variable number of arguments using the Args... syntax. We then use the ((std::cout << args << " "), ...) syntax to print each argument, followed by a space.
+
+## long long
+A data type that represents a 64-bit integer value.
+
+## char16_t and char32_t
+Two new character types that were introduced to support Unicode characters. They represent 16 bit and 32 bit characters values respectively.
+
+Example:
+````c++
+char16_t c1 = u'\u1234'; // char16_t
+char32_t c2 = U'\U00012345'; // char32_t
+````
+
+## literal types
+
+**Literal types** in C++ are types that can be initialized with a constant expression, such as an integer or floating-point literal. These types are also known as "literal type" or "compile-time constant type".
+* Integer literals (e.g., 1, 2, 3)
+* Floating-point literals (e.g., 3.14, -0.5)
+* Character literals (e.g., 'a', 'B')
+* String literals (e.g., "hello", "world")
+* Boolean literals (e.g., true, false)
+* Null pointer literals (e.g., nullptr)
+
+**Characteristics**:
+* They can be initialized with a constant expression.
+* They are evaluated at compile-time, which means their values are known at compile-time.
+* They are not subject to runtime evaluation or execution.
+* They do not have any side effects.
+
+**Benefits**:
+* Improved performance: Since literal types are evaluated at compile-time, they do not incur any runtime overhead.
+* Better code readability: Using literal types can make your code more readable, as the values are explicitly specified.
+* Reduced errors: Since literal types are evaluated at compile-time, errors are detected earlier, reducing the likelihood of runtime errors.
+
+
+## User-Defined Literals
+User-defined literals are a way to define new literal types that can be used in your code. 
+
+**Syntax**:
+````c++
+long double operator "" ldl(long double);
+unsigned long long operator "" ulll(unsigned long long);
+long long operator "" lll(long long);
+unsigned long operator "" ul(unsigned long);
+long operator "" l(long);
+unsigned operator "" u(unsigned);
+const char* operator "" s(const char*, size_t);
+char16_t operator "" su(const char16_t*, size_t);
+char32_t operator "" suu(const char32_t*, size_t);
+wchar_t operator "" sw(const wchar_t*, size_t);
+````
+
+**Example**:
+````c++
+long long operator "" _sec(long long value) {
+    return value * 1000; // convert seconds to milliseconds
+}
+
+int main() {
+    auto duration = 10_sec; // equivalent to 10000 milliseconds
+    // do something with the duration
+    return 0;
+}
+````
+A user-defined literal `_sec` that takes a `long long` value and returns the equivalent time duration in milliseconds.
+
+**Benefits**
+* Improved readability: User-defined literals can make your code more readable by allowing you to express specific types of data in a more intuitive way.
+* Increased expressiveness: User-defined literals can increase the expressiveness of your code by allowing you to define new literal types that are tailored to your specific needs.
+* Improved maintainability: User-defined literals can improve the maintainability of your code by making it easier to modify or extend existing code.
+
+## `static_assert`
+It is a keyword used to verify that a constant expression is true at compile-time. Here, 'expression' is a constant expression that can be evaluated at compile time, and 'message' is a string literal that is displayed if the assertion fails.
+
+**Syntax**:
+````c++
+static_assert(expression, message);
+````
+
+**Example**:
+````c++
+static_assert(sizeof(int) == 4, "Incorrect size for int");
+````
+## `alignof` and `alignas`
+
+`alignof` is an operator that returns the alignment requirement of a type. The alignment requirement is the minimum alignment that must be satisfied for an object of that type to be properly aligned.
+
+`alignas` is a specifier that can be used to specify the alignment requirement for a variable or a type.
+
+**Syntax**
+````c++
+alignof(type)
+alignof(expression)
+
+alignas(type)
+alignas(expression)
+alignas(alignment value)
+````
+
+Here, `type` is the type for which you want to know the alignment requirement, and `expression` is an expression that can be evaluated at compile-time to determine the underlying type. 
+Also, `type` is a type that has an alignment requirement that you want to use, `expression` is an expression that can be evaluated at compile-time to determine the underlying type, and `alignment value` is a constant expression that specifies the alignment requirement.
+
+**Example**:
+````c++
+std::cout << "Alignment of int: " << alignof(int) << std::endl;    // display the alignment required by int
+alignas(double) char arr[10];  // Each element of arr will be aligned to double
+````
+## Attributes
+A way to provide additional information about a function, variable, or type. 
+
+**Syntax**:
+````c++
+[[attribute]] declaration
+````
+
+**Example**:
+````c++
+[[deprecated]] void old_function() {
+    // do something
+}
+````
+The `[[deprecated]]` attribute is used to mark the `old_function` function as deprecated.
+
+Some of the Standard attitbutes:
+* `[[deprecated]]`: marks a function, variable, or type as deprecated.
+* `[[fallthrough]]`: indicates that a fallthrough from a switch statement is intentional.
+* `[[maybe_unused]]`: indicates that a variable or function parameter may be unused.
+* `[[nodiscard]]`: indicates that the return value of a function should not be ignored.
+* `[[noreturn]]`: indicates that a function does not return.
+
+**User Defined Attributes**:
+Example of defining a custom attribute to mark a function as a unit test:
+````c++
+#define unittest [[attribute(unittest)]]
+
+unittest void test_function() {
+    // do something
+}
+````
+
 
 ----------------------------------------------------------------------------------------------
 
