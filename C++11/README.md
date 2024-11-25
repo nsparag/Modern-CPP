@@ -36,7 +36,9 @@ g++ -std=c++11 mainFile.cpp
     * Attributes
     * `default` function
     * `delete` function
-
+* Standard Library Features
+  * Thread library
+----------------------------------------------------------------------------------------------
 ## Move semantics
 
 It allows objects to be transferred from one location to another, without copying the object. It means transfer ownership of some resource it manages to another object.
@@ -720,12 +722,97 @@ An attempt to call noInt() with an int parameter will be rejected by the compile
 
 ----------------------------------------------------------------------------------------------
 
+## Thread library
+
+It provides a high-level abstraction for working with threads, making it easier to write concurrent programs.
+
+Here are some key features of the thread library in C++11:
+* `std::thread`: This is the core class of the thread library. It represents a thread of execution and provides methods to start, join, and detach a thread.
+* `std::this_thread`: This namespace provides functions that allow threads to manipulate their own state.
+* `std::mutex`: This is a mutex (short for mutual exclusion) class that can be used to synchronize access to shared resources.
+* `std::lock_guard` and `std::unique_lock`: These classes are RAII (Resource Acquisition Is Initialization) wrappers around mutexes. They provide a way to automatically acquire and release locks when entering or exiting a scope.
+* `std::condition_variable`: This class is used to implement condition variables, which allow threads to wait until a certain condition is met before proceeding.
+
+## Tuple
+
+It allows to create objects that hold multiple values of different types.
+
+**Example**:
+````c++
+// Tuple Declaration
+std::tuple<int, double, std::string> myTuple;
+
+// declare and initialize a tuple at the same time
+auto myTuple = std::make_tuple(10, 3.14, "Hello");
+````
+
+Tuple and Structures - Key differences:
+* Naming: In a structure, you can name each member, which makes it easier to access and understand the data. In a tuple, the elements are referenced by their index.
+* Readability: Structures are more readable, especially for complex data types, because you can clearly see what each member represents.
+* Performance: Tuples are generally faster and more lightweight than structures because they don't require the overhead of member access.
+* Flexibility: Tuples are more flexible than structures because you can easily modify the elements or add new ones.
+
+When to use each:
+Use a structure when:
+* You need to represent complex data types with clear, descriptive names.
+* Readability and maintainability are important.
+* You need to perform operations on the data that depend on its meaning (e.g., you have a Person structure and you want to calculate the person's age).
+Use a tuple when:
+* You need to return multiple values from a function.
+* You need to represent simple data types.
+* Performance is critical, and you can't afford the overhead of a structure.
+
+## Hash Tables
+
+Hash table is a fundamental data structure that provide an efficient way to store and retrieve data.
+
+The hash table containers supported are:
+* `std::unordered_map`: a hash table that stores key-value pairs in an unordered manner.
+* `std::unordered_multimap`: a hash table that stores key-value pairs, allowing multiple values for each key.
+* `std::unordered_set`: a hash table that stores unique keys without associated values.
+* `std::unordered_multiset`: a hash table that stores unique keys, allowing multiple instances of each key.
+
+## `std::array`
+
+`std::array` is a fixed-size container that stores a collection of elements of the same type in contiguous memory locations. It is similar to a C-style array, but with additional features and safeguards.
+It is more efficient than std::vector but safer and easier to use than a c-style array.
+
+## `std::forward_list`
+It is a singly-linked list that provides efficient insertion and deletion of elements. It is similar to `std::list`, but with a few key differences.
+* efficient insertion and deletion of elements at the beginning and end of the list.
+* can not access elements by index
+* provides `insert_after()` and `erase_after` for inserting and deleting elements after a specified iterator.
+
+## Regular expressions
+
+`std::regex` represents a regular expression
+`std::match_results` represents the results of a match.
+
+The <regex> library provides several match algorithms:
+* `std::regex_search`: Searches for a match anywhere in the string.
+* `std::regex_match`: Matches the entire string against the pattern.
+* `std::regex_replace`: Replaces matches with a replacement string.
+
+## Smart Pointers
+
+Smart pointers are a type of container that provide automatic memory management for dynamically allocated objects. They are designed to replace raw pointers and automatically handle the deallocation of memory when the object is no longer needed.
+
+* `std::unique_ptr`: A unique pointer is a smart pointer that owns and manages another object through a pointer.
+* `std::shared_ptr`: A shared pointer is a smart pointer that retains shared ownership of an object through a pointer. Several shared_ptr objects may own the same object.
+* `std::weak_ptr`: A weak pointer is a smart pointer that observes an object owned by a shared_ptr without participating in the ownership. It is used to prevent circular references.
+
+All three smart pointers provide automatic memory management, eliminating the need for manual memory management using `new` and `delete`.
+All three smart pointers support exception safety, ensuring that memory is properly released even when exceptions occur.
+All three smart pointers are designed to prevent memory leaks and dangling pointers.
 
 
-
-
-
-
+|	std::unique_ptr	| std::shared_ptr	| std::weak_ptr |
+|:----------|:----------:|:----------: |
+| Ownership	| Exclusive	| Shared	Observing
+| Deletion		| Automatically deletes the object when it goes out of scope		| Automatically deletes the object when the last shared_ptr to it goes out of scope		| Does not delete the object	| 
+| Copy Semantics	| 	No copy semantics	| 	Can be copied		| No copy semantics	| 
+| Move Semantics		| Supports move semantics	| 	Supports move semantics		| No move semantics	| 
+| Example Use Case		| Exclusive ownership of an object	| 	Shared ownership of an object	| 	Observing an object without taking ownership	| 
 
 
 
