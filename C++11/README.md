@@ -25,6 +25,7 @@ g++ -std=c++11 mainFile.cpp
     * `Override` specifier
     * Scoped enum
     * Type Aliases
+    * `noexcept` Specifier and `noexcept` Operator
   * Functionality Improvement
     * Variadic templates
     * long long
@@ -38,6 +39,16 @@ g++ -std=c++11 mainFile.cpp
     * `delete` function
 * Standard Library Features
   * Thread library
+  * Tuple
+  * Hash Tables
+  * `std::array`
+  * `std::forward_list`
+  * Regular expressions
+  * Smart Pointers
+  * Chrono Library
+  * to_string
+  * Type traits
+  * `std::tie`
 ----------------------------------------------------------------------------------------------
 ## Move semantics
 
@@ -533,6 +544,26 @@ using Byte = unsigned char;
 * Simplifying complex types: Type aliases can be used to simplify complex type declarations, such as Vector for std::vector<float>.
 * Defining domain-specific types: Type aliases can be used to define domain-specific types, such as Point for std::pair<float, float>.
 
+## `noexcept` Specifier and `noexcept` Operator
+The noexcept specifier and noexcept operator are used to specify that a function does not throw any exceptions.
+
+**`noexcept` Specifier**
+
+The noexcept specifier is used to declare that a function does not throw any exceptions. 
+````c++
+void myFunction() noexcept;
+````
+**`noexcept` Operator**
+
+The noexcept operator is used to check whether a function is declared as noexcept. It returns true if the function is declared as noexcept and false otherwise.
+````c++
+bool isNoexcept = noexcept(myFunction());
+````
+**Benefits**
+* Improved Performance: Functions declared as noexcept are more efficient because the compiler can optimize them without considering the possibility of exceptions.
+* Better Code Quality: The noexcept specifier helps to ensure that functions are written to handle errors correctly and avoids the use of exceptions for flow control.
+
+
 ## Variadic Templates
 It allows a function or class to take a variable number of template parameters.
 
@@ -814,43 +845,74 @@ All three smart pointers are designed to prevent memory leaks and dangling point
 | Move Semantics		| Supports move semantics	| 	Supports move semantics		| No move semantics	| 
 | Example Use Case		| Exclusive ownership of an object	| 	Shared ownership of an object	| 	Observing an object without taking ownership	| 
 
+## Chrono Library
 
+`std::chrono` provides a flexible and efficient way to work with time and durations. It introduces several key components:
 
+* `std::chrono::duration` class template, durations define a length of time, such as seconds, milliseconds, or microseconds.
+* `std::chrono::time_point` class template, time points represent a specific moment in time.
+* `std::chrono::system_clock`, `std::chrono::steady_clock`, and `std::chrono::high_resolution_clock` classes, clocks provide a way to obtain time points.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## `noexcept` Specifier and `noexcept` Operator
-The noexcept specifier and noexcept operator are used to specify that a function does not throw any exceptions.
-
-**`noexcept` Specifier**
-
-The noexcept specifier is used to declare that a function does not throw any exceptions. 
+**Example**:
 ````c++
-void myFunction() noexcept;
-````
-**`noexcept` Operator**
+#include <iostream>
+#include <chrono>
 
-The noexcept operator is used to check whether a function is declared as noexcept. It returns true if the function is declared as noexcept and false otherwise.
-````c++
-bool isNoexcept = noexcept(myFunction());
+void myFunction() {
+    // Simulate some work
+    for (int i = 0; i < 100000000; ++i);
+}
+
+int main() {
+    auto start = std::chrono::high_resolution_clock::now();
+    myFunction();
+    auto end = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout << "Time taken: " << duration.count() << " milliseconds" << std::endl;
+
+    return 0;
+}
 ````
-**Benefits**
-* Improved Performance: Functions declared as noexcept are more efficient because the compiler can optimize them without considering the possibility of exceptions.
-* Better Code Quality: The noexcept specifier helps to ensure that functions are written to handle errors correctly and avoids the use of exceptions for flow control.
+
+## `to_string`
+
+`std::to_string` Converts a numeric argument to a `std::string`
+
+Example:
+````c++
+std::to_string(1.2); // == "1.2"
+std::to_string(12); // == "12"
+````
+
+## Type traits
+
+Type traits are the features that allow to query and manipulate the properties of types at compile-time. 
+
+* `std::is_same`: Checks if two types are the same.
+* `std::is_base_of`: Checks if a type is a base class of another type.
+* `std::is_class`: Checks if a type is a class.
+* `std::is_enum`: Checks if a type is an enumeration.
+* `std::is_function`: Checks if a type is a function.
+* `std::is_arithmetic`: Checks if a type is an arithmetic type (e.g., int, float).
+* `std::is_pointer`: Checks if a type is a pointer.
+* `std::is_reference`: Checks if a type is a reference.
+* `std::is_const`: Checks if a type is const.
+* `std::is_volatile`: Checks if a type is volatile.
+
+Use of type traits to modify types, such as
+
+* `std::remove_const`: Removes const from a type.
+* `std::remove_volatile`: Removes volatile from a type.
+* `std::add_const`: Adds const to a type.
+* `std::add_volatile`: Adds volatile to a type.
+
+
+## `std::tie`
+It is a function in that allows you to unpack a tuple (or a pair) and assign its elements to multiple variables. It is commonly used when working with functions that return multiple values, or when working with tuples that need to be decomposed into individual variables.
+
+**Example**:
+````c++
+std::tie(var1, var2, ..., varN) = tuple;
+````
+Where var1, var2, ..., varN are the variables to be assigned, and tuple is the tuple that contains the values to be unpacked.
