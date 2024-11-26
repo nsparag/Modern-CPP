@@ -52,7 +52,7 @@ g++ -std=c++11 mainFile.cpp
   * Type traits
   * `std::tie`
 ----------------------------------------------------------------------------------------------
-## Move semantics
+## :pushpin: Move semantics
 
 It allows objects to be transferred from one location to another, without copying the object. It means transfer ownership of some resource it manages to another object.
 
@@ -67,7 +67,7 @@ Benefits of Move Semantics:
 * Reduced Memory Allocation: Move semantics can reduce memory allocation by allowing objects to be transferred without creating a new copy.
 * Simplified Code: Move semantics can simplify code by reducing the need for copy constructors and copy assignment operators.
 
-## Rvalue Reference
+## :pushpin:  Rvalue Reference
 
 Rvalue references are a type of reference that allows us to bind to an rvalue. 
 An rvalue is an expression that can appear on the right-hand side of an assignment. An expression is _rvalue_ if it it results in a temporary object.
@@ -88,7 +88,7 @@ int main() {
 ````
 Rvalue Reference is useful when the function needs to implement move semantics or transfer ownership of an object.
 
-## Move Constructor
+## :pushpin:  Move Constructor
 A move constructor is a special type of constructor in C++ that is used to transfer the ownership of an object from one instance to another.
 When an object is created, it typically acquires resources such as memory, file handles, or network connections. However, when an object is copied, the copied object also acquires the same resources, which can lead to problems such as:
 * Resource leaks: When the copied object is destroyed, it does not release the resources, causing a resource leak.
@@ -133,7 +133,7 @@ int main() {
 ````
 This shows that the move constructor is used to transfer ownership from obj1 to obj2, and then both objects are destroyed.
 
-## `constexpr` 
+## :pushpin:  `constexpr` 
 It allows to evaluate function or expressions at compile-time.
 
 **Example**: constexpr Variable
@@ -156,14 +156,14 @@ return x * x;
 * Better Error Messages: constexpr functions provide better error messages than runtime errors, which can make it easier to diagnose and fix issues.
 
 
-## `extern template`
+## :pushpin:  `extern template`
 It is a feature in C++11 that allows you to specify that a template instantiation should be defined in a separate translation unit, rather than in the current translation unit. It is analogous to extern data declarations.
 
 **Example**:
 ````c++
 extern template class MyClass<int>;
 ````
-## Initializer Lists
+## :pushpin:  Initializer Lists
 An initializer list is a list of values enclosed in curly braces `{}`. It allows to initialize objects in a uniform way.
 
 **Syntax**:
@@ -190,7 +190,7 @@ struct Person {
 Person person = {30, "John"}; // Aggregate initialization
 ````
 
-## brace-or-equal initializers
+## :pushpin:  brace-or-equal initializers
 Brace-or-equal initializers are a feature in C++ that allows for initializing objects with either the `=` operator or with curly brackets `{}`.
 
 **Syntax**:
@@ -209,7 +209,7 @@ Type variable_name{value}; // Brace initializer
 | Type Deduction	| Supports type deduction	| Does not support type deduction| 
 | Example| 	int x = 3.14;| 	int x{3.14};| 
 
-## `nullptr`
+## :pushpin: `nullptr`
 `nullptr` is a keyword in C++ that was introduced in C++11 as a replacement for the older `NULL` macro. 
 `nullptr` itself is of type `std::nullptr_t` and can be implicitly converted into pointer types, and unlike `NULL`, not convertible to integral types except bool.
 
@@ -218,7 +218,7 @@ Type variable_name{value}; // Brace initializer
 int* ptr = nullptr;
 ````
 
-## Range-Based Loops
+## :pushpin: Range-Based Loops
 
 A Range-Based Loop is a type of loop that allows you to iterate over a range of values, such as the elements of a container or an array, without having to manually manage the loop counter or index.
 Syntax:
@@ -249,7 +249,7 @@ Advantages:
 * Less error-prone: You don't have to manually manage the loop counter or index, which reduces the risk of off-by-one errors or other mistakes.
 * Type-safe: The type of the loop variable is automatically deduced by the compiler, which ensures type safety.
 
-## Lambda Expressions
+## :pushpin: Lambda Expressions
 It allows to define anonymous functions. They allow us to write a short code snippet to be used as a standard library function predicate.
 
 **Syntax**:
@@ -402,7 +402,7 @@ Lambda functions in C++ can be defined in various places, including:
 * Data Processing: Lambda functions are useful in data processing, such as data transformation, filtering, or mapping.
 * Concurrency: Lambda functions can be used in concurrent programming, such as parallel processing or asynchronous programming.
 
-## Automatic Type Deduction
+## :pushpin: Automatic Type Deduction
 
 With auto, you can let the compiler figure out the type of the variable, making your code more concise and easier to read.
 
@@ -420,7 +420,7 @@ auto constCharVariable = "Hello"; // const char*
 * Readability: Your code becomes more readable, as the focus is on the variable's name and its purpose, rather than its type.
 * Reduced typing errors: The compiler will detect type errors at compile-time, reducing the likelihood of runtime errors.
 
-## `decltype`
+## :pushpin: `decltype`
 `decltype` is a keyword that allows to deduce the type of an expression.
 
 **Example**:
@@ -434,7 +434,7 @@ decltype(var1+5) var2; // var2 is of type int
 * SFINAE: decltype can be used with SFINAE to enable or disable function templates based on the type of expressions.
 * Variable Declaration: decltype can be used to deduce the type of variables, making the code more concise and easier to maintain.
 
-## Trailing Return Types
+## :pushpin: Trailing Return Types
 It deals about specifying the return type of a function after the function name. his syntax is especially useful when the return type depends on the template parameters of the function.
 
 **Example 1:**: the function will return int type value
@@ -452,7 +452,7 @@ auto add(T x, U y) -> decltype(x + y) {
 ````
 By using trailing return types, you can write more expressive and maintainable code in C++.
 
-## `final` specifier
+## :pushpin: `final` specifier
 The final keyword is used to specify that a virtual function cannot be overridden in a derived class. 
 It is typically used to prevent unwanted overrides and ensure that a function behaves consistently across all derived classes.
 
@@ -471,7 +471,7 @@ public:
     }
 };
 ````
-## `Override` specifier
+## :pushpin: `Override` specifier
 The override keyword is used to specify that a virtual function is intended to override a function in a base class. It is typically used to ensure that a function is correctly overriding a base class function, rather than introducing a new function with the same name.
 ````C++
 class Base {
@@ -489,7 +489,7 @@ public:
 };
 ````
 
-## Scoped Enums
+## :pushpin: Scoped Enums
 A type of enumeration that limits the scope of the enumeration values to the enum itself, rather than having them be part of the surrounding scope.
 
 **Example**:
@@ -522,7 +522,7 @@ In this example, enumColor is a scoped enum, and its values (RED, GREEN, BLUE) a
 * Large Projects: Use scoped enums in large projects to improve readability, avoid ambiguity, and prevent type errors.
 * Complex Codebases: Use scoped enums in complex codebases where there are many enumeration values and overlapping scopes.
 
-## Type Aliases
+## :pushpin: Type Aliases
 A type alias is a new name given to an existing data type. It is a way to create a shorthand or a more meaningful name for a type.
 
 **Syntax**:
@@ -546,7 +546,7 @@ using Byte = unsigned char;
 * Simplifying complex types: Type aliases can be used to simplify complex type declarations, such as Vector for std::vector<float>.
 * Defining domain-specific types: Type aliases can be used to define domain-specific types, such as Point for std::pair<float, float>.
 
-## `noexcept` Specifier and `noexcept` Operator
+## :pushpin: `noexcept` Specifier and `noexcept` Operator
 The noexcept specifier and noexcept operator are used to specify that a function does not throw any exceptions.
 
 **`noexcept` Specifier**
@@ -566,7 +566,7 @@ bool isNoexcept = noexcept(myFunction());
 * Better Code Quality: The noexcept specifier helps to ensure that functions are written to handle errors correctly and avoids the use of exceptions for flow control.
 
 
-## Variadic Templates
+## :pushpin: Variadic Templates
 It allows a function or class to take a variable number of template parameters.
 
 **Synatx**:
@@ -590,10 +590,10 @@ int main() {
 ````
 Here, printArgs that takes a variable number of arguments using the Args... syntax. We then use the ((std::cout << args << " "), ...) syntax to print each argument, followed by a space.
 
-## long long
+## :pushpin: long long
 A data type that represents a 64-bit integer value.
 
-## char16_t and char32_t
+## :pushpin: char16_t and char32_t
 Two new character types that were introduced to support Unicode characters. They represent 16 bit and 32 bit characters values respectively.
 
 Example:
@@ -602,7 +602,7 @@ char16_t c1 = u'\u1234'; // char16_t
 char32_t c2 = U'\U00012345'; // char32_t
 ````
 
-## literal types
+## :pushpin: literal types
 
 **Literal types** in C++ are types that can be initialized with a constant expression, such as an integer or floating-point literal. These types are also known as "literal type" or "compile-time constant type".
 * Integer literals (e.g., 1, 2, 3)
@@ -624,7 +624,7 @@ char32_t c2 = U'\U00012345'; // char32_t
 * Reduced errors: Since literal types are evaluated at compile-time, errors are detected earlier, reducing the likelihood of runtime errors.
 
 
-## User-Defined Literals
+## :pushpin: User-Defined Literals
 User-defined literals are a way to define new literal types that can be used in your code. 
 
 **Syntax**:
@@ -660,7 +660,7 @@ A user-defined literal `_sec` that takes a `long long` value and returns the equ
 * Increased expressiveness: User-defined literals can increase the expressiveness of your code by allowing you to define new literal types that are tailored to your specific needs.
 * Improved maintainability: User-defined literals can improve the maintainability of your code by making it easier to modify or extend existing code.
 
-## `static_assert`
+## :pushpin: `static_assert`
 It is a keyword used to verify that a constant expression is true at compile-time. Here, 'expression' is a constant expression that can be evaluated at compile time, and 'message' is a string literal that is displayed if the assertion fails.
 
 **Syntax**:
@@ -672,7 +672,7 @@ static_assert(expression, message);
 ````c++
 static_assert(sizeof(int) == 4, "Incorrect size for int");
 ````
-## `alignof` and `alignas`
+## :pushpin: `alignof` and `alignas`
 
 `alignof` is an operator that returns the alignment requirement of a type. The alignment requirement is the minimum alignment that must be satisfied for an object of that type to be properly aligned.
 
@@ -696,7 +696,7 @@ Also, `type` is a type that has an alignment requirement that you want to use, `
 std::cout << "Alignment of int: " << alignof(int) << std::endl;    // display the alignment required by int
 alignas(double) char arr[10];  // Each element of arr will be aligned to double
 ````
-## Attributes
+## :pushpin: Attributes
 A way to provide additional information about a function, variable, or type. 
 
 **Syntax**:
@@ -729,7 +729,7 @@ unittest void test_function() {
 }
 ````
 
-## `default` function
+## :pushpin: `default` function
 
 Explicitly defaulted functions in C++ are a feature that allows you to explicitly declare a special member function (such as constructors, destructors, assignment operators, etc.) as = default in the class definition. This tells the compiler to generate a default implementation for that function, just like it would if the function wasn't declared at all.
 It is achieved by writing `default` in the function declaration.
@@ -743,7 +743,7 @@ class temp
 };
 ````
 
-## `delete` function
+## :pushpin: `delete` function
 It allows a function to be explicitly disabled. It is achieved by keyword `delete` in the function declaration.
 
 **Example**:
@@ -755,7 +755,7 @@ An attempt to call noInt() with an int parameter will be rejected by the compile
 
 ----------------------------------------------------------------------------------------------
 
-## Thread library
+## :pushpin: Thread library
 
 It provides a high-level abstraction for working with threads, making it easier to write concurrent programs.
 
@@ -766,7 +766,7 @@ Here are some key features of the thread library in C++11:
 * `std::lock_guard` and `std::unique_lock`: These classes are RAII (Resource Acquisition Is Initialization) wrappers around mutexes. They provide a way to automatically acquire and release locks when entering or exiting a scope.
 * `std::condition_variable`: This class is used to implement condition variables, which allow threads to wait until a certain condition is met before proceeding.
 
-## Tuple
+## :pushpin: Tuple
 
 It allows to create objects that hold multiple values of different types.
 
@@ -795,7 +795,7 @@ Use a tuple when:
 * You need to represent simple data types.
 * Performance is critical, and you can't afford the overhead of a structure.
 
-## Hash Tables
+## :pushpin: Hash Tables
 
 Hash table is a fundamental data structure that provide an efficient way to store and retrieve data.
 
@@ -805,18 +805,18 @@ The hash table containers supported are:
 * `std::unordered_set`: a hash table that stores unique keys without associated values.
 * `std::unordered_multiset`: a hash table that stores unique keys, allowing multiple instances of each key.
 
-## `std::array`
+## :pushpin: `std::array`
 
 `std::array` is a fixed-size container that stores a collection of elements of the same type in contiguous memory locations. It is similar to a C-style array, but with additional features and safeguards.
 It is more efficient than std::vector but safer and easier to use than a c-style array.
 
-## `std::forward_list`
+## :pushpin: `std::forward_list`
 It is a singly-linked list that provides efficient insertion and deletion of elements. It is similar to `std::list`, but with a few key differences.
 * efficient insertion and deletion of elements at the beginning and end of the list.
 * can not access elements by index
 * provides `insert_after()` and `erase_after` for inserting and deleting elements after a specified iterator.
 
-## Regular expressions
+## :pushpin: Regular expressions
 
 `std::regex` represents a regular expression
 `std::match_results` represents the results of a match.
@@ -826,7 +826,7 @@ The <regex> library provides several match algorithms:
 * `std::regex_match`: Matches the entire string against the pattern.
 * `std::regex_replace`: Replaces matches with a replacement string.
 
-## Smart Pointers
+## :pushpin: Smart Pointers
 
 Smart pointers are a type of container that provide automatic memory management for dynamically allocated objects. They are designed to replace raw pointers and automatically handle the deallocation of memory when the object is no longer needed.
 
@@ -847,7 +847,7 @@ All three smart pointers are designed to prevent memory leaks and dangling point
 | Move Semantics		| Supports move semantics	| 	Supports move semantics		| No move semantics	| 
 | Example Use Case		| Exclusive ownership of an object	| 	Shared ownership of an object	| 	Observing an object without taking ownership	| 
 
-## Chrono Library
+## :pushpin: Chrono Library
 
 `std::chrono` provides a flexible and efficient way to work with time and durations. It introduces several key components:
 
@@ -877,7 +877,7 @@ int main() {
 }
 ````
 
-## `to_string`
+## :pushpin: `to_string`
 
 `std::to_string` Converts a numeric argument to a `std::string`
 
@@ -887,7 +887,7 @@ std::to_string(1.2); // == "1.2"
 std::to_string(12); // == "12"
 ````
 
-## Type traits
+## :pushpin: Type traits
 
 Type traits are the features that allow to query and manipulate the properties of types at compile-time. 
 
@@ -910,7 +910,7 @@ Use of type traits to modify types, such as
 * `std::add_volatile`: Adds volatile to a type.
 
 
-## `std::tie`
+## :pushpin: `std::tie`
 It is a function in that allows you to unpack a tuple (or a pair) and assign its elements to multiple variables. It is commonly used when working with functions that return multiple values, or when working with tuples that need to be decomposed into individual variables.
 
 **Example**:
