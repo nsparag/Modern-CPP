@@ -3,14 +3,20 @@
 C++14 is a version of the ISO/IEC 14882 standard for the C++ programming language. It is a small extension over C++11 standards.
 
 * New language features
-  * Function return type deduction
-  * decltype(auto)
+  * [Function return type deduction](https://github.com/nsparag/Modern-CPP/blob/main/C%2B%2B14/README.md#pushpin-function-return-type-deduction)
+  * [decltype(auto)](https://github.com/nsparag/Modern-CPP/blob/main/C%2B%2B14/README.md#pushpin-decltypeauto)
   * Variable templates
-  * Generic lambdas
+  * [Generic lambdas](https://github.com/nsparag/Modern-CPP/blob/main/C%2B%2B14/README.md#pushpin-generic-lambdas)
   * Lambda init-capture
-  * Binary literals
-  * Digit separators
-  * Relaxed constexpr restrictions
+  * [Binary literals](https://github.com/nsparag/Modern-CPP/blob/main/C%2B%2B14/README.md#pushpin-binary-literals)
+  * [Digit separators](https://github.com/nsparag/Modern-CPP/blob/main/C%2B%2B14/README.md#pushpin-digit-separators)
+  * [Relaxed constexpr restrictions](https://github.com/nsparag/Modern-CPP/blob/main/C%2B%2B14/README.md#pushpin-digit-separators)
+ * Standard Library features
+   * Shared mutexes and locking
+   * Standard user-defined literals
+   * Tuple addressing via type
+   * std::make_unique
+   * Compile-time integer sequences
 
 ## :pushpin: Function return type deduction
 
