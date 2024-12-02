@@ -29,28 +29,28 @@ g++ -std=c++11 mainFile.cpp
     * [Type Aliases](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-type-aliases)
     * [`noexcept` Specifier and `noexcept` Operator](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-noexcept-specifier-and-noexcept-operator)
   * Functionality Improvement
-    * Variadic templates
-    * long long
-    * char16_t and char32_t
-    * literal types
-    * User-Defined Literals
-    * static_assert
-    * `alignof` and `alignas`
-    * Attributes
-    * `default` function
-    * `delete` function
+    * [Variadic templates](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-variadic-templates)
+    * [long long](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-long-long)
+    * [char16_t and char32_t](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-char16_t-and-char32_t)
+    * [literal types](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-literal-types)
+    * [User-Defined Literals](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-user-defined-literals)
+    * [static_assert](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-static_assert)
+    * [`alignof` and `alignas`](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-alignof-and-alignas)
+    * [Attributes](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-attributes)
+    * [`default` function](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-default-function)
+    * [`delete` function](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-delete-function)
 * Standard Library Features
-  * Thread library
-  * Tuple
-  * Hash Tables
-  * `std::array`
-  * `std::forward_list`
-  * Regular expressions
-  * Smart Pointers
-  * Chrono Library
-  * to_string
-  * Type traits
-  * `std::tie`
+  * [Thread library](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-thread-library)
+  * [Tuple](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-tuple)
+  * [Hash Tables](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-hash-tables)
+  * [`std::array`](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-stdarray)
+  * [`std::forward_list`](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-stdforward_list)
+  * [Regular expressions](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-regular-expressions)
+  * [Smart Pointers](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-smart-pointers)
+  * [Chrono Library](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-chrono-library)
+  * [to_string](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-to_string)
+  * [Type traits](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-type-traits)
+  * [`std::tie`](https://github.com/nsparag/Modern-CPP/blob/main/C++11/README.md#pushpin-stdtie)
 ----------------------------------------------------------------------------------------------
 ## :pushpin: Move semantics
 
