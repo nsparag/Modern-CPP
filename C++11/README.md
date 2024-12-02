@@ -52,7 +52,7 @@ g++ -std=c++11 mainFile.cpp
   * Type traits
   * `std::tie`
 ----------------------------------------------------------------------------------------------
-##pushpin- :pushpin: Move semantics
+## :pushpin: Move semantics
 
 It allows objects to be transferred from one location to another, without copying the object. It means transfer ownership of some resource it manages to another object.
 
